@@ -28,14 +28,29 @@ class Player(object):
             for item in self.items:
                 print(item.name,":",item.price)
             Selection=input("Which item would you like to sell: ")
-            if Selection in self.items:
-                self.money += item.price
-                self.items.remove(item)
-                print("Inventory:")
-                for item in self.items:
-                    print(item.name,":",item.price)
-            print("Current Cash:",self.money)
-            Continue=input("Would you like to sell more?(y/n):")
+            sellItem=[]
+            sellItem2=[]
+            for i in self.items:
+                sellItem.append(i.name)
+                sellItem2.append(i.price)
+            count=0
+            missell=True
+            for i in sellItem:
+                if Selection == i:
+                    self.money += sellItem2[count]
+                    self.items.remove(self.items[count])
+                    print("Inventory:")
+                    missell=False
+                    for item in self.items:
+                        print(item.name,":",item.price)
+                
+                else:
+                    count+=1
+                    
+            if missell==True:
+                print("Please enter a valid item")
+            Continue=input("Would you like to sell more? (y/n): ")
+            
 
     def BuyItems(self,BuyItemsList1,BuyItemsList2,BuyItemsList3,BuyItemsList4):
         Continue=""
@@ -55,7 +70,7 @@ class Player(object):
             print("Armor:")
             for Item in BuyItemsList4.keys():
                 print("Name:",Item,"Cost:",BuyItemsList4[Item].price)
-            Selection=input("Which item would youlike to buy: ")
+            Selection=input("Which item would you like to buy: ")
             if Selection in BuyItemsList1:
                 item=BuyItemsList1[Selection]
                 if item.price > self.money:
